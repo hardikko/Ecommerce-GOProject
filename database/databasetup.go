@@ -6,24 +6,21 @@ import (
 	"log"
 	"time"
 
-	"go.mongo.org/mongo-driver/mongo"
-	"go.mongo.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func DBSet() *mongo.Client {
 
-	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://localhost:27016"))
+	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://development:testpassword@localhost:27017"))
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-
 	defer cancel()
-
-	err = client.Conect(ctx)
+	err = client.Connect(ctx)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -39,12 +36,12 @@ func DBSet() *mongo.Client {
 
 var Client *mongo.Client = DBSet()
 
-func UserData(client *mongo.Client, collectionName string) *mongo.Collection {
-	var collection *mongo.Collection = client.Database("Ecommerce").Collection(collectionName)
+func UserData(client *mongo.Client, CollectionName string) *mongo.Collection {
+	var collection *mongo.Collection = client.Database("Ecommerce").Collection(CollectionName)
 	return collection
 }
 
-func ProductData(client *mongo.Client, collectionName string) *mongo.Collection {
-	var productCollection *mongo.Collection = client.Database("Ecommerce").Collection(collectionName)
-	return productCollection
+func ProductData(client *mongo.Client, CollectionName string) *mongo.Collection {
+	var productcollection *mongo.Collection = client.Database("Ecommerce").Collection(CollectionName)
+	return productcollection
 }
